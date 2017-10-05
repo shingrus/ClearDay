@@ -7,9 +7,7 @@ var morgan = require('morgan');             // log requests to the console (expr
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
-var mongoUrl = "mongodb://testTodo:Todo17@ds163494.mlab.com:63494/test1"
-
-// var mongoUrl = "mongodb://localhost/test"
+var mongoUrl = (isHeroku()) ? process.env.PROD_MONGODB : "mongodb://localhost/test"
 
 
 app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
@@ -167,3 +165,9 @@ promise.then(function () {
 })
 
 // listen (start app with node server.js) ======================================
+
+
+//additional functions
+function isHeroku() {
+    return process.env.NODE && ~process.env.NODE.indexOf("heroku") ? true : false;
+}

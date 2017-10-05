@@ -2,7 +2,7 @@
 <!--Much thanks to https://scotch.io/tutorials/creating-a-single-page-todo-app-with-node-and-angular -->
 
 
-<html ng-app="todoApp">
+<html ng-app="todoApp" xmlns="http://www.w3.org/1999/html">
 <head>
     <!-- META -->
     <meta charset="utf-8">
@@ -30,6 +30,9 @@
             text-decoration: line-through;
             color: grey;
         }
+        .lb-lg {
+            font-size: 20px;
+        }
     </style>
 
 
@@ -43,29 +46,26 @@
 <div class="container">
 
     <!-- HEADER AND TODO COUNT -->
-    <div class="jumbotron text-center">
-        <h1>Clear Day ToDo <span class="badge badge-default rounded-circle"> {{ todos.length }}</span></h1>
+    <div class="jumbotron text-center align-baseline">
+        <h1>Clear Day ToDo <span class="badge badge-default rounded-circle" ng-hide="(todos.lenght==0)"> {{ todos.length }}</span></h1>
     </div>
 
-    <div class="container">
+    <div class="container" >
         <div class="row">
-            <div class="col text-right" ng-click="setPrevDay()"><button type="button" class="btn btn-success">&lt;&lt;</button>
-            </div>
-            <div class="col-5 text-center">{{currentDay}}</div>
+            <div class="col text-right" ng-click="setPrevDay()"><button type="button" class="btn btn-success">&lt;&lt;</button></div>
+            <div class="col text-center"><h3>{{currentDay}}</h3></div>
             <div class="col text-left" ng-click="setNextDay()"><button type="button" class="btn btn-success">&gt;&gt;</button></div>
         </div>
-
     </div>
-    <!-- TODO LIST -->
-    <div id="todo-list" class="row justify-content-center" >
 
-        <div class="col-sm-4 col-sm-offset-4">
+    <!-- TODO LIST -->
+    <div id="todo-list" class="container" >
+
+        <div class="col justify-content-center ">
             <!-- LOOP OVER THE TODOS IN $scope.todos -->
-            <div class="checkbox" ng-repeat="todo in todos | orderBy : 'done'">
-                <label >
-                    <input class="form-check-input" type="checkbox" ng-model="todo.done" ng-change="setDone(todo)" ng-checked="todo.done">
-                    <h4 class="done-{{todo.done}}">{{todo.text}}</h4>
-                </label>
+            <div class="checkbox form-check" ng-repeat="todo in todos | orderBy : 'done'">
+                <label class="align-baseline form-check-label lb-lg done-{{todo.done}}">
+                    <input class="form-check-input " type="checkbox" ng-model="todo.done" ng-change="setDone(todo)" ng-checked="todo.done"> {{todo.text}}</label>
                 <span aria-hidden="true" class="badge badge-danger" aria-label="Delete" ng-click="deleteTodo(todo._id)" >&times;</span>
             </div>
         </div>
