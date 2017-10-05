@@ -11,8 +11,8 @@
     <title>Node/Angular Todo App</title>
 
 
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
     <style>
         html {
@@ -26,10 +26,12 @@
         #todo-list {
             margin-bottom: 30px;
         }
+
         .done-true {
             text-decoration: line-through;
             color: grey;
         }
+
         .lb-lg {
             font-size: 20px;
         }
@@ -47,28 +49,39 @@
 
     <!-- HEADER AND TODO COUNT -->
     <div class="jumbotron text-center align-baseline">
-        <h1>Clear Day ToDo <span class="badge badge-default rounded-circle" ng-hide="(todos.lenght==0)"> {{ todos.length }}</span></h1>
+        <h1>Clear Day ToDo <span class="badge badge-default rounded-circle" ng-hide="(todos.lenght==0)"> {{ todos.length }}</span>
+        </h1>
     </div>
 
-    <div class="container" >
-        <div class="row">
-            <div class="col text-right" ng-click="setPrevDay()"><button type="button" class="btn btn-success">&lt;&lt;</button></div>
-            <div class="col text-center"><h3>{{currentDay}}</h3></div>
-            <div class="col text-left" ng-click="setNextDay()"><button type="button" class="btn btn-success">&gt;&gt;</button></div>
+    <div class="container">
+        <div class="row justify-content-center ">
+            <div class="col col-lg-2 text-right" ng-click="setPrevDay()">
+                <button type="button" class="btn btn-success">&lt;&lt;</button>
+            </div>
+            <div class="col col-md-auto text-center"><h3>{{currentDay}}</h3></div>
+            <div class="col col-lg-2 text-left" ng-click="setNextDay()">
+                <button type="button" class="btn btn-success">&gt;&gt;</button>
+            </div>
+        </div>
+        <div class="row justify-content-center ">
+
+            <div class="col col-8">
+                <!-- LOOP OVER THE TODOS IN $scope.todos -->
+                <div class="checkbox form-check" ng-repeat="todo in todos | orderBy : 'done'">
+                    <label class="align-baseline form-check-label lb-lg done-{{todo.done}}">
+                        <input class="form-check-input " type="checkbox" ng-model="todo.done" ng-change="setDone(todo)"
+                               ng-checked="todo.done"> {{todo.text}}</label>
+                    <span aria-hidden="true" class="badge badge-danger" aria-label="Delete"
+                          ng-click="deleteTodo(todo._id)">&times;</span>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- TODO LIST -->
-    <div id="todo-list" class="container" >
+    <div id="todo-list" class="container justify-content-center ">
 
-        <div class="col justify-content-center ">
-            <!-- LOOP OVER THE TODOS IN $scope.todos -->
-            <div class="checkbox form-check" ng-repeat="todo in todos | orderBy : 'done'">
-                <label class="align-baseline form-check-label lb-lg done-{{todo.done}}">
-                    <input class="form-check-input " type="checkbox" ng-model="todo.done" ng-change="setDone(todo)" ng-checked="todo.done"> {{todo.text}}</label>
-                <span aria-hidden="true" class="badge badge-danger" aria-label="Delete" ng-click="deleteTodo(todo._id)" >&times;</span>
-            </div>
-        </div>
+
     </div>
 
     <!-- FORM TO CREATE TODOS -->
@@ -83,7 +96,7 @@
                 </div>
 
                 <!-- createToDo() WILL CREATE NEW TODOS -->
-                <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+                <button type="submit" class="btn btn-primary btn-med" ng-click="createTodo()">Add</button>
             </form>
         </div>
     </div>
